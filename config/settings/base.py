@@ -62,6 +62,7 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
     # "django.contrib.humanize", # Handy template tags
     "django.contrib.admin",
+    #'django_extensions',
 ]
 THIRD_PARTY_APPS = [
     "crispy_forms",
@@ -74,6 +75,9 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "csci_2019_project.users.apps.UsersConfig",
     # Your stuff: custom apps go here
+    #'users.apps.UsersConfig',
+    #'pages.apps.PagesConfig'
+    "csci_2019_project.reports.apps.ReportsConfig"
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

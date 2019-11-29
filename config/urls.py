@@ -4,17 +4,26 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
+from csci_2019_project.reports.views import  ReportDashView, ReportExposureView, ReportMainView
 
 urlpatterns = [
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
     path(
         "about/", TemplateView.as_view(template_name="pages/about.html"), name="about"
     ),
+    path(
+        "reports/", TemplateView.as_view(template_name="reports/reports.html"), name="reports"
+    ),
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
     path("users/", include("csci_2019_project.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
+    #path("reports/", include("csci_2019_project.reports.urls", namespace="reports")),
+                  path("report/", view=ReportMainView, name="reports"),
+                  path("report/dash", view=ReportDashView, name="reports_dash"),
+                  path("report/exposure", view=ReportExposureView, name="report_exposure"),
+
     # Your stuff: custom urls includes go here
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
