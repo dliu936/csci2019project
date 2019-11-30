@@ -7,6 +7,7 @@
 {% block head_title %}{% trans "Forex Analytics Advanced Reporting" %}{% endblock %}
 
 {% block content %}
+{% load static %}
 <div class="alert alert-dark" role="alert">
   <h4>
   Unlock efficiencies in your trading algorithm through advanced analytic capabilities.
@@ -15,30 +16,30 @@
 
 <div class="card-deck">
   <div class="card">
-    <img class="card-img-top" src="/static/images/reports.jpg" alt="Card image cap">
+    <img class="card-img-top" src="{% static "images/chart2.jpg" %}" alt="Report Dashboard">
     <div class="card-body">
       <h5 class="card-title">Report Dashboard</h5>
       <p class="card-text">View all your reports in one place.</p>
     </div>
     <div class="card-footer">
-      <a href="{% url 'contact' %}" class="btn btn-primary">Explore</a>
+      <a href="{% url 'reports_dash' %}" class="btn btn-primary">Explore</a>
     </div>
   </div>
   <div class="card">
-    <img class="card-img-top" src="/static/images/historic.jpg" alt="Card image cap">
+    <img class="card-img-top" src="{% static "images/chart1.jpg" %}" alt="Exposure Report" >
     <div class="card-body">
       <h5 class="card-title">Exposure Report</h5>
       <p class="card-text">View details in the Exposure report.</p>
     </div>
     <div class="card-footer">
-      <a href="{% url 'reports' %}" class="btn btn-primary">Explore</a>
+      <a href="{% url 'reports_exposure' %}" class="btn btn-primary">Explore</a>
     </div>
   </div>
   <div class="card">
-    <img class="card-img-top" src="/static/images/forex.jpg" alt="Card image cap">
+    <img class="card-img-top" src="{% static "images/ai_chart.jpg" %}"alt="Correlation Report">
     <div class="card-body">
-      <h5 class="card-title">Another Report</h5>
-      <p class="card-text">Another Report.</p>
+      <h5 class="card-title">Correlation Report</h5>
+      <p class="card-text">Correlation Report.</p>
     </div>
     <div class="card-footer">
       <a href="{% url 'reports' %}" class="btn btn-primary">Explore</a>

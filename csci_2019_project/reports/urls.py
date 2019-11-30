@@ -2,10 +2,10 @@ from django.urls import path
 
 from .views import ReportMainView, ReportExposureView, ReportDashView
 
-app_name = "reports"
+#app_name = "reports"
 
 urlpatterns = [
-    path("report/", view=ReportMainView, name="reports"),
-    path("report/dash", view=ReportDashView, name="reports_dash"),
-    path("report/exposure", view=ReportExposureView, name="report_exposure"),
+    path("", ReportMainView.as_view(), name="reports"),
+    path("dash", ReportDashView.as_view(), name="reports_dash"),
+    path("exposure", ReportExposureView.as_view(), name="reports_exposure"),
 ]

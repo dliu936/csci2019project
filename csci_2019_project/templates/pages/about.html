@@ -3,12 +3,51 @@
 {% block title %}About{% endblock title %}
 
 {% block content %}
-<h1>About Page</h1>
 
-  <div>
-  <p>
-  Maximizing your trading dollar requires advanced analytics to account for the voltility that occurrs at any given moment.
-  </p>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">About Page</h5>
+      <p class="card-text">Forex Analytics was founded on the idea that advanced algorithms would better detect trading patterns than the avergae human.
+        If you would like more information, please fill out the form below.</p>
+      <form>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="inputEmail4">Email</label>
+            <input type="email" class="form-control" id="inputEmail4">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputPassword4">Password</label>
+            <input type="password" class="form-control" id="inputPassword4">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputAddress">Address</label>
+          <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+        </div>
+        <div class="form-group">
+          <label for="inputAddress2">Address 2</label>
+          <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="inputCity">City</label>
+            <input type="text" class="form-control" id="inputCity">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputState">State</label>
+            <select id="inputState" class="form-control">
+              <option selected>Choose...</option>
+              <option>...</option>
+            </select>
+          </div>
+          <div class="form-group col-md-2">
+            <label for="inputZip">Zip</label>
+            <input type="text" class="form-control" id="inputZip">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
   </div>
-  <H>HI LIAM LIU!</H>
+
 {% endblock content %}

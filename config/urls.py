@@ -19,10 +19,8 @@ urlpatterns = [
     # User management
     path("users/", include("csci_2019_project.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
-    #path("reports/", include("csci_2019_project.reports.urls", namespace="reports")),
-                  path("report/", view=ReportMainView, name="reports"),
-                  path("report/dash", view=ReportDashView, name="reports_dash"),
-                  path("report/exposure", view=ReportExposureView, name="report_exposure"),
+    #path("reports/", include("csci_2019_project.reports.urls")),
+    path("reports", include("csci_2019_project.reports.urls")),
 
     # Your stuff: custom urls includes go here
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

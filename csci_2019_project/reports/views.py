@@ -5,15 +5,26 @@ from django.views.generic import DetailView, RedirectView, UpdateView, TemplateV
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 
-User = get_user_model()
 
 
 class ReportMainView(TemplateView):
-    template_name = 'templates/reports/reports.html'
+    template_name = 'reports/reports.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
 class ReportExposureView(TemplateView):
-    template_name = 'templates/reports/exposure.html'
+    template_name = 'reports/exposure.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 class ReportDashView(TemplateView):
-    template_name = 'templates/reports/reports_dash.html'
+    template_name = 'reports/dash.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
