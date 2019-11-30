@@ -266,6 +266,4 @@ SOCIALACCOUNT_ADAPTER = "csci_2019_project.users.adapters.SocialAccountAdapter"
 
 # Your stuff...
 # ------------------------------------------------------------------------------
-if ENV_ROLE == 'production':
-    import dj_database_url
-    DATABASES['default'] =  dj_database_url.config()
+
