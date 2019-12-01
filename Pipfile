@@ -30,6 +30,7 @@ django-toolbelt = "*"
 dj-database-url = "*"
 whitenoise = "*"
 django-heroku = "*"
+matplotlib = "*"
 
 [requires]
 python_version = "3.7"
