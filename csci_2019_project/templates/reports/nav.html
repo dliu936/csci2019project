@@ -16,8 +16,8 @@
 {% block content %}
   <div class="jumbotron jumbotron-fluid">
     <div class="container">
-      <h1 class="display-4">Exposure Report</h1>
-      <p class="lead">Show current snd historic exposure for portfolio size and currency exposure.</p>
+      <h1 class="display-4">Net Asset Value Report</h1>
+      <p class="lead">Current value of cash as well as market price of open positions. Show how NAV have fluctuated.</p>
     </div>
   </div>
 
@@ -26,9 +26,9 @@
       <div class="col">
         <label for="cp1">Currency Pair</label>
         <select class="form-control form-control-sm">
-          {% for key, value in currencylist %}
-            <option value="{{ value }}">{{key}}</option>
-            {% endfor %}
+          <option>AUD</option>
+          <option>CAD</option>
+          <option>USD</option>
         </select>
         <small id="cp1Help" class="form-text text-muted">Select the first of the currency pair</small>
       </div>
