@@ -9,6 +9,7 @@
 {% block content %}
 
 <!-- Comment this out to retain the basenav bar -->
+  <!--
 <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
   <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Forex Analytics</a>
   <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
@@ -18,7 +19,7 @@
     </li>
   </ul>
 </nav>
-
+-->
 <div class="container-fluid">
   <div class="row">
     <nav class="col-md-2 d-none d-md-block bg-light sidebar">
@@ -31,33 +32,63 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file"></span>
-              Orders
+            <a class="nav-link" href="{% url 'reports_exposure' %}">
+              <span data-feather="aperture"></span>
+              Exposure
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="shopping-cart"></span>
-              Products
+            <a class="nav-link" href="{% url 'reports_volatility' %}">
+              <span data-feather="bar-chart"></span>
+              Volatility
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="users"></span>
-              Customers
+            <a class="nav-link" href="{% url 'reports_financing' %}">
+              <span data-feather="dollar-sign"></span>
+              Financing
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'reports_nav' %}">
+              <span data-feather="dollar-sign"></span>
+              Net Asset Value
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
               <span data-feather="bar-chart-2"></span>
-              Reports
+              Open Trades
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
-              <span data-feather="layers"></span>
-              Integrations
+              <span data-feather="archive"></span>
+              Scenario Simulations
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="trending-up"></span>
+              Correlation
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="columns"></span>
+              Trade Distribution
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="grid"></span>
+              Pricing Distribution
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="file-text"></span>
+              Spread
             </a>
           </li>
         </ul>
