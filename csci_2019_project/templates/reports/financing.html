@@ -1,25 +1,13 @@
 {% extends "reports/base.html" %}
 
-
-{% load i18n %}
-{% load crispy_forms_tags %}
-
-{% block head_title %}
-    {% trans "Forex Analytics Advanced Reporting" %}
-    <!-- Bootstrap Date-Picker Plugin -->
-  <script type="text/javascript"
-          src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
-{% endblock %}
-
-{% block content %}
-  <div class="jumbotron jumbotron-fluid">
+{% block report_title %}
     <div class="container">
       <h1 class="display-4">Financing Report</h1>
       <p class="lead">Finance fees for currently open positions as well as historic prices for closed ones.</p>
     </div>
-  </div>
+{% endblock %}
+
+{% block report %}
   <form>
     <div class="form-row">
       <div class="col">
@@ -60,9 +48,9 @@
 
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
-{% endblock content %}
+{% endblock report %}
 
-{% block javascript %}
+{% block report_javascript %}
   <script>
       $(document).ready(function () {
           var date_input = $('input[name="dateStart"]'); //our date input has the name "date"

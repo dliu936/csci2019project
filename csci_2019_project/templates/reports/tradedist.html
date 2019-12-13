@@ -2,20 +2,25 @@
 
 {% block report_title %}
     <div class="container">
-      <h1 class="display-4">Net Asset Value Report</h1>
-      <p class="lead">Current value of cash as well as market price of open positions. Show how NAV have fluctuated.</p>
+      <h1 class="display-4">Trade Distribution Report</h1>
+      <p class="lead">Show current snd historic exposure for portfolio size and currency exposure.</p>
     </div>
 {% endblock %}
 
 {% block report %}
+  {% if graph %}
+  <div style="width:600;height:500">
+  {{ graph|safe }}
+  </div>
+    {% endif %}
   <form>
     <div class="form-row">
       <div class="col">
         <label for="cp1">Currency Pair</label>
         <select class="form-control form-control-sm">
-          <option>AUD</option>
-          <option>CAD</option>
-          <option>USD</option>
+          {% for key, value in currencylist %}
+            <option value="{{ value }}">{{key}}</option>
+            {% endfor %}
         </select>
         <small id="cp1Help" class="form-text text-muted">Select the first of the currency pair</small>
       </div>

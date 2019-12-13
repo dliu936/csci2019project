@@ -6,6 +6,8 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
+pandas = "*"
+numpy = "*"
 pytz = "==2019.3"
 python-slugify = "==4.0.0"
 argon2-cffi = "==19.2.0"
@@ -15,7 +17,6 @@ django-model-utils = "==3.2.0"
 django-allauth = "==0.40.0"
 django-crispy-forms = "==1.8.1"
 django-redis = "==4.10.0"
-djangorestframework = "==3.10.3"
 coreapi = "==2.3.3"
 gunicorn = "==20.0.3"
 psycopg2 = "==2.8.3"
@@ -31,6 +32,10 @@ dj-database-url = "*"
 whitenoise = "*"
 django-heroku = "*"
 matplotlib = "*"
+plotly = "==4.4.1"
+psutil = "*"
+requests = "*"
+xhtml2pdf = "~=0.2.3"
 
 [requires]
 python_version = "3.7"

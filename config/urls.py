@@ -16,7 +16,7 @@ urlpatterns = [
     ),
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
-    # User management
+    # User managementpipenv --
     path("users/", include("csci_2019_project.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     #path("reports/", include("csci_2019_project.reports.urls")),

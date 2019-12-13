@@ -1,0 +1,27 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pytest = "*"
+pytest-cov = "*"
+moto = "*"
+
+[packages]
+setuptools-scm = "*"
+pandas = {editable = true,version = "*"}
+luigi = "*"
+oandapyV20 = "*"
+python-dotenv = "*"
+dask = {extras = ["dataframe"],version = "*"}
+fastparquet = "*"
+s3fs = "*"
+tqdm = "*"
+gevent = "*"
+seaborn = "*"
+matplotlib = "*"
+fpdf = "*"
+
+[requires]
+python_version = "3.7"
