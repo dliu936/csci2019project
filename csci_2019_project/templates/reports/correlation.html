@@ -1,0 +1,52 @@
+{% extends "reports/base.html" %}
+
+{% block report_title %}
+  <div class="container">
+      <h1 class="display-4">Correlation Report</h1>
+      <p class="lead">Show historic correlation between each of the instruments.</p>
+    </div>
+{% endblock %}
+  {% load static %}
+{% block report %}
+  {% if graph %}
+    <div style="width:600;height:500">{{ graph|safe }}</div>
+  {% else %}
+    <div><img class="rpt_exposure" src="{% static "images/correlationM5.png" %}" alt="Exposure Report" ></div>
+  {% endif %}
+  {% endblock report %}
+  {% block rpt_form %}
+  <form>
+    <div class="form-row">
+      <div class="col">
+        <label for="cp3">Granularity</label>
+        <select class="form-control form-control-sm">
+          <option value="S5">5 seconds</option>
+          <option value="S10">10 seconds</option>
+          <option value="S15">15seconds</option>
+          <option value="S30">30 seconds</option>
+          <option value="M1">1 minute</option>
+          <option value="M2">2 minutes</option>
+          <option value="M3">3 minutes</option>
+          <option value="M4">4 minutes</option>
+          <option value="M5">5 minutes</option>
+          <option value="M10">10 minutes</option>
+          <option value="M15">15 minutes</option>
+          <option value="M30">30 minutes</option>
+          <option value="H1">1 hour</option>
+          <option value="H2">2 hours</option>
+          <option value="H3">3 hours</option>
+          <option value="H4">4 hours</option>
+          <option value="H6">6 hours</option>
+          <option value="H8">8 hours</option>
+          <option value="H12">12 hours</option>
+          <option value="D">Daily</option>
+          <option value="W">Weekly</option>
+          <option value="M1">Monthly</option>
+        </select>
+        <small id="cp3Help" class="form-text text-muted">Select the granularity</small>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  {% endblock rpt_form %}
+

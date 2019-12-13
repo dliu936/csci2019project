@@ -1,0 +1,20 @@
+{% extends "reports/base.html" %}
+
+{% block report_title %}
+    <div class="container">
+      <h1 class="display-4">Open Trade Report</h1>
+      <p class="lead">Shows the instrument pricing with date and price of the open trade.</p>
+    </div>
+{% endblock %}
+  {% load static %}
+{% block report %}
+  {% if graph %}
+    <div style="width:600;height:500">{{ graph|safe }}</div>
+  {% else %}
+    <div><img class="rpt_exposure" src="{% static "images/order_flow_AUD_CHF.png" %}" alt="Order flow AUD/CHF" ></div>
+    <div><img class="rpt_exposure" src="{% static "images/order_flow_AUD_SGD.png" %}" alt="Order flow AUD/SGD" ></div>
+    <div><img class="rpt_exposure" src="{% static "images/order_flow_BCO_USD.png" %}" alt="Order flow BCO/USD" ></div>
+    <div><img class="rpt_exposure" src="{% static "images/order_flow_EUR_CAD.png" %}" alt="Order flow EUR/CAD" ></div>
+  {% endif %}
+{% endblock report %}
+

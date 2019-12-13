@@ -1,82 +1,18 @@
 {% extends "reports/base.html" %}
 
-
-{% load i18n %}
-{% load crispy_forms_tags %}
-
-{% block head_title %}
-    {% trans "Forex Analytics Advanced Reporting" %}
-    <!-- Bootstrap Date-Picker Plugin -->
-  <script type="text/javascript"
-          src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
-{% endblock %}
-
-{% block content %}
-  <div class="jumbotron jumbotron-fluid">
-    <div class="container">
+{% block report_title %}
+  <div class="container">
       <h1 class="display-4">Exposure Report</h1>
-      <p class="lead">Show current snd historic exposure for portfolio size and currency exposure.</p>
+      <p class="lead">Shows the current and historic exposure for portfolio size and currency.</p>
     </div>
-  </div>
-
-  <form>
-    <div class="form-row">
-      <div class="col">
-        <label for="cp1">Currency Pair</label>
-        <select class="form-control form-control-sm">
-          {% for key, value in currencylist %}
-            <option value="{{ value }}">{{key}}</option>
-            {% endfor %}
-        </select>
-        <small id="cp1Help" class="form-text text-muted">Select the first of the currency pair</small>
-      </div>
-      <div class="col">
-        <label for="cp2">Counter Currency</label>
-        <select class="form-control form-control-sm">
-          <option>AUD</option>
-          <option>CAD</option>
-          <option>USD</option>
-        </select>
-        <small id="cp2Help" class="form-text text-muted">Select the second of the currency pair</small>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="col">
-        <div class="form-group"> <!-- Date input -->
-          <label class="control-label" for="dateStart">Date</label>
-          <input class="form-control" id="dateStart" name="dateStart" placeholder="MM/DD/YYY" type="text"/>
-        </div>
-        <small id="dt1Help" class="form-text text-muted">Select starting date for the report</small>
-      </div>
-      <div class="col">
-        <div class="form-group"> <!-- Date input -->
-          <label class="control-label" for="dateEnd">Date</label>
-          <input class="form-control" id="dateEnd" name="dateEnd" placeholder="MM/DD/YYY" type="text"/>
-        </div>
-        <small id="dt1Help" class="form-text text-muted">Select ending date for the report</small>
-      </div>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
-{% endblock content %}
-
-{% block javascript %}
-  <script>
-      $(document).ready(function () {
-          var date_input = $('input[name="dateStart"]'); //our date input has the name "date"
-          var date_input2 = $('input[name="dateEnd"]'); //our date input has the name "date"
-          var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
-          var options = {
-              format: 'mm/dd/yyyy',
-              container: container,
-              todayHighlight: true,
-              autoclose: true,
-          };
-          date_input.datepicker(options);
-          date_input2.datepicker(options);
-      })
-  </script>
 {% endblock %}
+  {% load static %}
+{% block report %}
+  {% if graph %}
+    <div style="width:600;height:500">{{ graph|safe }}</div>
+  {% else %}
+    <div><img class="rpt_exposure" src="{% static "images/EUR_CAD_exposure.png" %}" alt="Exposure Report" ></div>
+  {% endif %}
+
+{% endblock report %}
+

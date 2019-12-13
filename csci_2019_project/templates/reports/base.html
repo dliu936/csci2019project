@@ -1,11 +1,355 @@
 {% extends "base.html" %}
-{% block title %}{% block head_title %}{% endblock head_title %}{% endblock title %}
 
+
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+
+{% block head_title %}{% trans "Forex Analytics Advanced Reporting" %}{% endblock %}
+
+{% block report_hdr_javascript %}
+{% endblock %}
 
 {% block content %}
-<div class="row">
-  <div class="col-md-6 offset-md-3">
-    {% block inner %}{% endblock %}
+
+<!-- Comment this out to retain the basenav bar -->
+  <!--
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Forex Analytics</a>
+  <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+  <ul class="navbar-nav px-3">
+    <li class="nav-item text-nowrap">
+      <a class="nav-link" href="#">Sign out</a>
+    </li>
+  </ul>
+</nav>
+-->
+
+<div class="container-fluid">
+  <div class="row">
+    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">
+              <span data-feather="home"></span>
+              Dashboard <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'exposure' %}">
+              <span data-feather="aperture"></span>
+              Exposure
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'volatility' %}">
+              <span data-feather="bar-chart"></span>
+              Volatility
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'financing' %}">
+              <span data-feather="dollar-sign"></span>
+              Financing
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'nav' %}">
+              <span data-feather="trello"></span>
+              Net Asset Value
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'opentrades' %}">
+              <span data-feather="bar-chart-2"></span>
+              Open Trades
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="archive"></span>
+              Scenario Simulations
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'correlation' %}">
+              <span data-feather="trending-up"></span>
+              Correlation
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'tradedist' %}">
+              <span data-feather="columns"></span>
+              Trade Distribution
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'pricingdist' %}">
+              <span data-feather="grid"></span>
+              Pricing Distribution
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="file-text"></span>
+              Spread
+            </a>
+          </li>
+        </ul>
+
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>Saved reports</span>
+          <a class="d-flex align-items-center text-muted" href="#">
+            <span data-feather="plus-circle"></span>
+          </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="file-text"></span>
+              Current month
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">{% block report_title %}Dashboard{% endblock %}</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+          <div class="btn-group mr-2">
+            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+          </div>
+          <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+            <span data-feather="calendar"></span>
+            This week
+          </button>
+        </div>
+      </div>
+
+      <div name="report">
+      {% block report %}
+      {% endblock report %}
+      {% block rpt_form %}
+        <form>
+        <div class="form-row">
+          <div class="col">
+            <label for="cp1">Currency Pair</label>
+            <select class="form-control form-control-sm">
+              <option value="USD" selected="selected">United States Dollars</option>
+              <option value="EUR">Euro</option>
+              <option value="GBP">United Kingdom Pounds</option>
+              <option value="DZD">Algeria Dinars</option>
+              <option value="ARP">Argentina Pesos</option>
+              <option value="AUD">Australia Dollars</option>
+              <option value="ATS">Austria Schillings</option>
+              <option value="BSD">Bahamas Dollars</option>
+              <option value="BBD">Barbados Dollars</option>
+              <option value="BEF">Belgium Francs</option>
+              <option value="BMD">Bermuda Dollars</option>
+              <option value="BRR">Brazil Real</option>
+              <option value="BGL">Bulgaria Lev</option>
+              <option value="CAD">Canada Dollars</option>
+              <option value="CLP">Chile Pesos</option>
+              <option value="CNY">China Yuan Renmimbi</option>
+              <option value="CYP">Cyprus Pounds</option>
+              <option value="CSK">Czech Republic Koruna</option>
+              <option value="DKK">Denmark Kroner</option>
+              <option value="NLG">Dutch Guilders</option>
+              <option value="XCD">Eastern Caribbean Dollars</option>
+              <option value="EGP">Egypt Pounds</option>
+              <option value="FJD">Fiji Dollars</option>
+              <option value="FIM">Finland Markka</option>
+              <option value="FRF">France Francs</option>
+              <option value="DEM">Germany Deutsche Marks</option>
+              <option value="XAU">Gold Ounces</option>
+              <option value="GRD">Greece Drachmas</option>
+              <option value="HKD">Hong Kong Dollars</option>
+              <option value="HUF">Hungary Forint</option>
+              <option value="ISK">Iceland Krona</option>
+              <option value="INR">India Rupees</option>
+              <option value="IDR">Indonesia Rupiah</option>
+              <option value="IEP">Ireland Punt</option>
+              <option value="ILS">Israel New Shekels</option>
+              <option value="ITL">Italy Lira</option>
+              <option value="JMD">Jamaica Dollars</option>
+              <option value="JPY">Japan Yen</option>
+              <option value="JOD">Jordan Dinar</option>
+              <option value="KRW">Korea (South) Won</option>
+              <option value="LBP">Lebanon Pounds</option>
+              <option value="LUF">Luxembourg Francs</option>
+              <option value="MYR">Malaysia Ringgit</option>
+              <option value="MXP">Mexico Pesos</option>
+              <option value="NLG">Netherlands Guilders</option>
+              <option value="NZD">New Zealand Dollars</option>
+              <option value="NOK">Norway Kroner</option>
+              <option value="PKR">Pakistan Rupees</option>
+              <option value="XPD">Palladium Ounces</option>
+              <option value="PHP">Philippines Pesos</option>
+              <option value="XPT">Platinum Ounces</option>
+              <option value="PLZ">Poland Zloty</option>
+              <option value="PTE">Portugal Escudo</option>
+              <option value="ROL">Romania Leu</option>
+              <option value="RUR">Russia Rubles</option>
+              <option value="SAR">Saudi Arabia Riyal</option>
+              <option value="XAG">Silver Ounces</option>
+              <option value="SGD">Singapore Dollars</option>
+              <option value="SKK">Slovakia Koruna</option>
+              <option value="ZAR">South Africa Rand</option>
+              <option value="KRW">South Korea Won</option>
+              <option value="ESP">Spain Pesetas</option>
+              <option value="XDR">Special Drawing Right (IMF)</option>
+              <option value="SDD">Sudan Dinar</option>
+              <option value="SEK">Sweden Krona</option>
+              <option value="CHF">Switzerland Francs</option>
+              <option value="TWD">Taiwan Dollars</option>
+              <option value="THB">Thailand Baht</option>
+              <option value="TTD">Trinidad and Tobago Dollars</option>
+              <option value="TRL">Turkey Lira</option>
+              <option value="VEB">Venezuela Bolivar</option>
+              <option value="ZMK">Zambia Kwacha</option>
+              <option value="EUR">Euro</option>
+              <option value="XCD">Eastern Caribbean Dollars</option>
+              <option value="XDR">Special Drawing Right (IMF)</option>
+              <option value="XAG">Silver Ounces</option>
+              <option value="XAU">Gold Ounces</option>
+              <option value="XPD">Palladium Ounces</option>
+              <option value="XPT">Platinum Ounces</option>
+            </select>
+            <small id="cp1Help" class="form-text text-muted">Select the first of the currency pair</small>
+          </div>
+          <div class="col">
+            <label for="cp2">Counter Currency</label>
+            <select class="form-control form-control-sm">
+              <option value="USD" selected="selected">United States Dollars</option>
+              <option value="EUR">Euro</option>
+              <option value="GBP">United Kingdom Pounds</option>
+              <option value="DZD">Algeria Dinars</option>
+              <option value="ARP">Argentina Pesos</option>
+              <option value="AUD">Australia Dollars</option>
+              <option value="ATS">Austria Schillings</option>
+              <option value="BSD">Bahamas Dollars</option>
+              <option value="BBD">Barbados Dollars</option>
+              <option value="BEF">Belgium Francs</option>
+              <option value="BMD">Bermuda Dollars</option>
+              <option value="BRR">Brazil Real</option>
+              <option value="BGL">Bulgaria Lev</option>
+              <option value="CAD">Canada Dollars</option>
+              <option value="CLP">Chile Pesos</option>
+              <option value="CNY">China Yuan Renmimbi</option>
+              <option value="CYP">Cyprus Pounds</option>
+              <option value="CSK">Czech Republic Koruna</option>
+              <option value="DKK">Denmark Kroner</option>
+              <option value="NLG">Dutch Guilders</option>
+              <option value="XCD">Eastern Caribbean Dollars</option>
+              <option value="EGP">Egypt Pounds</option>
+              <option value="FJD">Fiji Dollars</option>
+              <option value="FIM">Finland Markka</option>
+              <option value="FRF">France Francs</option>
+              <option value="DEM">Germany Deutsche Marks</option>
+              <option value="XAU">Gold Ounces</option>
+              <option value="GRD">Greece Drachmas</option>
+              <option value="HKD">Hong Kong Dollars</option>
+              <option value="HUF">Hungary Forint</option>
+              <option value="ISK">Iceland Krona</option>
+              <option value="INR">India Rupees</option>
+              <option value="IDR">Indonesia Rupiah</option>
+              <option value="IEP">Ireland Punt</option>
+              <option value="ILS">Israel New Shekels</option>
+              <option value="ITL">Italy Lira</option>
+              <option value="JMD">Jamaica Dollars</option>
+              <option value="JPY">Japan Yen</option>
+              <option value="JOD">Jordan Dinar</option>
+              <option value="KRW">Korea (South) Won</option>
+              <option value="LBP">Lebanon Pounds</option>
+              <option value="LUF">Luxembourg Francs</option>
+              <option value="MYR">Malaysia Ringgit</option>
+              <option value="MXP">Mexico Pesos</option>
+              <option value="NLG">Netherlands Guilders</option>
+              <option value="NZD">New Zealand Dollars</option>
+              <option value="NOK">Norway Kroner</option>
+              <option value="PKR">Pakistan Rupees</option>
+              <option value="XPD">Palladium Ounces</option>
+              <option value="PHP">Philippines Pesos</option>
+              <option value="XPT">Platinum Ounces</option>
+              <option value="PLZ">Poland Zloty</option>
+              <option value="PTE">Portugal Escudo</option>
+              <option value="ROL">Romania Leu</option>
+              <option value="RUR">Russia Rubles</option>
+              <option value="SAR">Saudi Arabia Riyal</option>
+              <option value="XAG">Silver Ounces</option>
+              <option value="SGD">Singapore Dollars</option>
+              <option value="SKK">Slovakia Koruna</option>
+              <option value="ZAR">South Africa Rand</option>
+              <option value="KRW">South Korea Won</option>
+              <option value="ESP">Spain Pesetas</option>
+              <option value="XDR">Special Drawing Right (IMF)</option>
+              <option value="SDD">Sudan Dinar</option>
+              <option value="SEK">Sweden Krona</option>
+              <option value="CHF">Switzerland Francs</option>
+              <option value="TWD">Taiwan Dollars</option>
+              <option value="THB">Thailand Baht</option>
+              <option value="TTD">Trinidad and Tobago Dollars</option>
+              <option value="TRL">Turkey Lira</option>
+              <option value="VEB">Venezuela Bolivar</option>
+              <option value="ZMK">Zambia Kwacha</option>
+              <option value="EUR">Euro</option>
+              <option value="XCD">Eastern Caribbean Dollars</option>
+              <option value="XDR">Special Drawing Right (IMF)</option>
+              <option value="XAG">Silver Ounces</option>
+              <option value="XAU">Gold Ounces</option>
+              <option value="XPD">Palladium Ounces</option>
+              <option value="XPT">Platinum Ounces</option>
+            </select>
+            <small id="cp2Help" class="form-text text-muted">Select the second of the currency pair</small>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col">
+            <div class="form-group"> <!-- Date input -->
+              <label class="control-label" for="dateStart">Date</label>
+              <input class="form-control" id="dateStart" name="dateStart" placeholder="MM/DD/YYY" type="text"/>
+            </div>
+            <small id="dt1Help" class="form-text text-muted">Select starting date for the report</small>
+          </div>
+          <div class="col">
+            <div class="form-group"> <!-- Date input -->
+              <label class="control-label" for="dateEnd">Date</label>
+              <input class="form-control" id="dateEnd" name="dateEnd" placeholder="MM/DD/YYY" type="text"/>
+            </div>
+            <small id="dt1Help" class="form-text text-muted">Select ending date for the report</small>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      {% endblock rpt_form %}
+      </div>
+      <!--
+        <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+      -->
+    </main>
   </div>
 </div>
+{% endblock content %}
+
+{% block report_javascript %}
+  <script>
+      $(document).ready(function () {
+          var date_input = $('input[name="dateStart"]'); //our date input has the name "date"
+          var date_input2 = $('input[name="dateEnd"]'); //our date input has the name "date"
+          var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+          var options = {
+              format: 'mm/dd/yyyy',
+              container: container,
+              todayHighlight: true,
+              autoclose: true,
+          };
+          date_input.datepicker(options);
+          date_input2.datepicker(options);
+      })
+  </script>
 {% endblock %}
