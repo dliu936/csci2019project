@@ -1,17 +1,37 @@
-dist: xenial
-services:
-  - postgresql
-before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq build-essential gettext python-dev zlib1g-dev libpq-dev xvfb
-  - sudo apt-get install -qq libjpeg8-dev libfreetype6-dev libwebp-dev
-  - sudo apt-get install -qq graphviz-dev python-setuptools python3-dev python-virtualenv python-pip
-  - sudo apt-get install -qq firefox automake libtool libreadline6 libreadline6-dev libreadline-dev
-  - sudo apt-get install -qq libsqlite3-dev libxml2 libxml2-dev libssl-dev libbz2-dev wget curl llvm
+# Config file for automatic testing at travis-ci.org
+
 language: python
+dist: xenial
 python:
-  - "3.7"
+  - 3.7
+
+# Command to run tests, e.g. python setup.py test
 install:
-  - pip install -r requirements/local.txt
-script:
-  - "pytest"
+- pip install pipenv
+- pipenv install --system --deploy --ignore-pipfile
+
+stages:
+  - test
+  - name: answers
+    if: branch = master
+
+jobs:
+  include:
+    - stage: test
+      script: pytest -v
+      install:
+        - pipenv install --dev --ignore-pipfile --deploy
+      before_script: # code coverage tool
+         - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+         - chmod +x ./cc-test-reporter
+         - ./cc-test-reporter before-build
+      script: pytest --cov-report xml --cov-report term
+      after_script:
+        - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+    - stage: answers
+      script:
+      # Before running, get the data from s3 using the secret
+      # credentials entered at https://travis-ci.com/csci-e-29/YOUR_PSET_REPO_NAME/settings
+      # DO NOT commit these variables to git.
+      # - make data
+      - python manage.py migrate

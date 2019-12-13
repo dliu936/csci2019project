@@ -4,6 +4,11 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+pytest-django = "*"
+pytest = "*"
+pytest-cov = "*"
+factory-boy = "*"
+pytest-cookies = "*"
 
 [packages]
 pandas = "*"
@@ -44,6 +49,7 @@ setuptools-scm = "*"
 python-dotenv = "*"
 tqdm = "*"
 fastparquet = "*"
+
 
 [requires]
 python_version = "3.7"
