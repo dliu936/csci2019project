@@ -36,6 +36,13 @@ plotly = "==4.4.1"
 psutil = "*"
 requests = "*"
 xhtml2pdf = "~=0.2.3"
+luigi = "*"
+dask = {extras = ["complete"],version = "*"}
+oandapyv20 = "*"
+seaborn = "*"
+setuptools-scm = "*"
+python-dotenv = "*"
+tqdm = "*"
 
 [requires]
 python_version = "3.7"

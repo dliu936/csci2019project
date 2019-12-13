@@ -6,8 +6,8 @@ from luigi.format import Nop
 import datetime as datetime
 from pylab import *
 from contextlib import suppress
-from helperfiles.task import TargetOutput, Requires, Requirement
-from tools.tradinghistory import GetTradingHistory
+from ..helperfiles.task import TargetOutput, Requires, Requirement
+from ..tools.tradinghistory import GetTradingHistory
 
 class NetAssetReport(Task):
 

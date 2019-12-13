@@ -1,6 +1,9 @@
 import plotly.graph_objects as go
 import plotly.offline as opy
+import plotly.tools as tls
 import pandas as pd
+import luigi
+from luigi import build
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -9,9 +12,10 @@ from django.views.generic import DetailView, RedirectView, UpdateView, TemplateV
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 from django.shortcuts import render
-from src.oandareports.reports import exposure, correlation
+from django.core.management import BaseCommand, call_command
+#from src.oandareports.reports import exposure, correlation
+from src.oandareports.reports.exposure import ExposureReport
 
-exposure.
 class ReportDashView(TemplateView):
     template_name = 'reports/dash.html'
 
@@ -28,11 +32,47 @@ class ReportMainView(TemplateView):
 
 
 class ReportExposureView(TemplateView):
+    '''
+    Use this class to invoke luigi and be notified  when it completes successfully.
+    '''
     template_name = 'reports/exposure.html'
 
+    @ExposureReport.event_handler(luigi.Event.SUCCESS)
+    def celebrate_success(task):
+        return task.fig
 
     def index(request):
+
         ccydict = {"Unites States Dollar" : "USD", "United Kingdom Pounds" : "GBP"}
+        context = {'currencylist': ccydict}
+        return render(request, ReportDashView.template_name, context)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        t = ExposureReport()
+        task = build([t], local_scheduler=True)
+        if task:
+            plotly_fig = tls.mpl_to_plotly(t.fig)
+            div = opy.plot(plotly_fig, auto_open=False, output_type='div')
+            context['graph'] = div
+        return context
+
+class ReportExposureView2(TemplateView):
+    '''
+    Use this class to invoke the luigi task directly to get the saved report.
+    '''
+    template_name = 'reports/exposure.html'
+
+    def index(request):
+        t = ExposureReport()
+        task = build([t], local_scheduler=True)
+
+        if task:
+            # Read the output plot
+            # pass to template
+            pass
+
+        ccydict = {"Unites States Dollar": "USD", "United Kingdom Pounds": "GBP"}
         context = {'currencylist': ccydict}
         return render(request, ReportDashView.template_name, context)
 
@@ -40,6 +80,8 @@ class ReportExposureView(TemplateView):
         context = super().get_context_data(**kwargs)
         return context
 
+    # Clear db of any data
+    call_command('cleandb')
 
 class ReportVolatilityView(TemplateView):
     template_name = 'reports/volatility.html'

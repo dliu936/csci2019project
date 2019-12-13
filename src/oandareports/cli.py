@@ -1,15 +1,14 @@
 import argparse
 from luigi import build
-from tools.historicrates import GetHistoricRates
-from tools.tradinghistory import GetTradingHistory
-from tools.create_pdf import PdfReport
-from reports.volatility import VolatilityReport
-from reports.exposure import ExposureReport
-from reports.financing import FinancingReport
-from reports.opentrades import OpenTradesReport
-from reports.netasset import NetAssetReport
-from reports.correlation import CorrelationReport
-
+from .tools.historicrates import GetHistoricRates
+from .tools.tradinghistory import GetTradingHistory
+from .tools.create_pdf import PdfReport
+from .reports.volatility import VolatilityReport
+from .reports.exposure import ExposureReport
+from .reports.financing import FinancingReport
+from .reports.opentrades import OpenTradesReport
+from .reports.netasset import NetAssetReport
+from .reports.correlation import CorrelationReport
 
 
 #def main():
@@ -23,8 +22,8 @@ my_parser = argparse.ArgumentParser(description='CLI for Oandareports')
   #                     metavar='function',
    #                    help="""The function you want to run: Alternatives are 'historic' for historic rates,""")
 #
-my_parser.add_argument('function', action='store', nargs=1, type=str, metavar='function', help="""The function you want to run: Alternatives 
-are 'report' for creating a report, 'historic' for historic rates, 'trading' for trading history, 'stream' for streaming rates, 
+my_parser.add_argument('function', action='store', nargs=1, type=str, metavar='function', help="""The function you want to run: Alternatives
+are 'report' for creating a report, 'historic' for historic rates, 'trading' for trading history, 'stream' for streaming rates,
 'volatility' for volatility report, 'exposure' for exposure report, 'financing' for financing report, 'netassets' for net assets report""")
 
 my_parser.add_argument('-i',

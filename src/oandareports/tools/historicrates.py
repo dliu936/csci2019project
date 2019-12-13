@@ -11,9 +11,9 @@ from dotenv import load_dotenv
 load_dotenv()
 #from oandareports import helperfiles
 
-from helperfiles.task import TargetOutput, Requires, Requirement
+from ..helperfiles.task import TargetOutput, Requires, Requirement
 #from helperfiles.task import TargetOutput, Requires, Requirement
-from helperfiles.target import ParquetTarget
+from ..helperfiles.target import ParquetTarget
 
 # Todo: Add comments
 

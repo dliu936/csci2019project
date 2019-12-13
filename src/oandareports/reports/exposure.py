@@ -6,13 +6,16 @@ import matplotlib.dates as mdates
 import dask.dataframe as dd
 from luigi import Task
 from luigi.parameter import Parameter
+import luigi
 from luigi import Task, ExternalTask
-from helperfiles.task import TargetOutput, Requires, Requirement
-from helperfiles.target import ParquetTarget
-from tools.tradinghistory import GetTradingHistory
+from ..helperfiles.task import TargetOutput, Requires, Requirement
+from ..helperfiles.target import ParquetTarget
+from ..tools.tradinghistory import GetTradingHistory
 
 #class GetHistory(Task):
  #   output = TargetOutput('../'+ os.getenv('local_location'), target_class=ParquetTarget)
+
+
 
 class ExposureReport(Task):
 
@@ -25,6 +28,9 @@ class ExposureReport(Task):
     output = TargetOutput('../'+ os.getenv('local_location') + 'reports/', target_class=ParquetTarget)
 
     df_list = []
+
+    # Placeholder for plot
+    fig = object
 
     def create_graph(self, instrument, dsk):
         dsk = dsk[dsk.instrument == instrument]
@@ -52,7 +58,10 @@ class ExposureReport(Task):
         name = instrument + '_' + 'exposure.png'
         #TODO: Make directory if not existing
         fig.savefig(os.getenv('local_location') + 'images/' + name)
-        fig.clf()
+        #fig.clf()
+
+        # return the object to the caller
+        self.fig = fig
 
 
     def run(self):
