@@ -43,6 +43,7 @@ seaborn = "*"
 setuptools-scm = "*"
 python-dotenv = "*"
 tqdm = "*"
+fastparquet = "*"
 
 [requires]
 python_version = "3.7"

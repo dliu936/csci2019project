@@ -6,15 +6,20 @@
       <p class="lead">Shows the current and historic exposure for portfolio size and currency.</p>
     </div>
 {% endblock %}
-
+  {% load static %}
 {% block report %}
-  {% if graph %}<div style="width:600;height:500">{{ graph|safe }}</div>{% endif %}
+  {% if graph %}
+    <div style="width:600;height:500">{{ graph|safe }}</div>
+  {% else %}
+    <div><img class="rpt_exposure" src="{% static "images/EUR_CAD_exposure.png" %}" alt="Exposure Report" ></div>
+  {% endif %}
+
   <form>
     <div class="form-row">
       <div class="col">
         <label for="cp1">Currency Pair</label>
         <select class="form-control form-control-sm">
-          {% for key, value in currencylist %}
+          {% for key, value in currencylist.ccydict %}
             <option value="{{ value }}">{{key}}</option>
             {% endfor %}
         </select>

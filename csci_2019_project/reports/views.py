@@ -36,10 +36,11 @@ class ReportExposureView(TemplateView):
     Use this class to invoke luigi and be notified  when it completes successfully.
     '''
     template_name = 'reports/exposure.html'
+    fig = []
 
     @ExposureReport.event_handler(luigi.Event.SUCCESS)
     def celebrate_success(task):
-        return task.fig
+        ReportExposureView.fig.append(task)
 
     def index(request):
 
@@ -78,10 +79,14 @@ class ReportExposureView2(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        t = ExposureReport()
+        task = build([t], local_scheduler=True)
+        if task:
+            plotly_fig = tls.mpl_to_plotly(t.fig)
+            div = opy.plot(plotly_fig, auto_open=False, output_type='div')
+            context['graph'] = div
         return context
 
-    # Clear db of any data
-    call_command('cleandb')
 
 class ReportVolatilityView(TemplateView):
     template_name = 'reports/volatility.html'

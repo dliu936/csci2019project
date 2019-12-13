@@ -6,8 +6,13 @@
       <p class="lead">Historic volatility for each of the instruments.</p>
     </div>
 {% endblock %}
-
+  {% load static %}
 {% block report %}
+  {% if graph %}
+    <div style="width:600;height:500">{{ graph|safe }}</div>
+  {% else %}
+    <div><img class="rpt_exposure" src="{% static "images/weekly_volatility_WTICO_USD.png" %}" alt="Exposure Report" ></div>
+  {% endif %}
   <form>
     <div class="form-row">
       <div class="col">

@@ -3,11 +3,17 @@
 {% block report_title %}
     <div class="container">
       <h1 class="display-4">Financing Report</h1>
-      <p class="lead">Finance fees for currently open positions as well as historic prices for closed ones.</p>
+      <p class="lead">Finance fees for currently open positions as well as historic</p>
+      <p class="lead">prices for closed ones.</p>
     </div>
 {% endblock %}
-
+  {% load static %}
 {% block report %}
+  {% if graph %}
+    <div style="width:600;height:500">{{ graph|safe }}</div>
+  {% else %}
+    <div><img class="rpt_exposure" src="{% static "images/financing.png" %}" alt="Exposure Report" ></div>
+  {% endif %}
   <form>
     <div class="form-row">
       <div class="col">

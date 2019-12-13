@@ -3,11 +3,17 @@
 {% block report_title %}
     <div class="container">
       <h1 class="display-4">Net Asset Value Report</h1>
-      <p class="lead">Current value of cash as well as market price of open positions. Show how NAV have fluctuated.</p>
+      <p class="lead">Current value of cash as well as market price of open positions.</p>
+      <p class="lead"> Show how NAV have fluctuated.</p>
     </div>
 {% endblock %}
-
+  {% load static %}
 {% block report %}
+  {% if graph %}
+    <div style="width:600;height:500">{{ graph|safe }}</div>
+  {% else %}
+    <div><img class="rpt_exposure" src="{% static "images/netassets.png" %}" alt="Exposure Report" ></div>
+  {% endif %}
   <form>
     <div class="form-row">
       <div class="col">
