@@ -15,6 +15,8 @@ import datetime as datetime
 class CorrelationReport(Task):
     granularity = Parameter()
     instruments = []
+    # Placeholder for plot
+    fig = object
 
     def requires(self):
         return [build([GetHistoricRates(instrument=x, granularity=self.granularity)], local_scheduler=True) for x in self.instruments]
@@ -49,3 +51,6 @@ class CorrelationReport(Task):
         name = 'correlation' + self.granularity + '.png'
         ##TODO: Make directory if not existing
         fig.savefig(os.getenv('local_location') + 'images/' + name)
+
+        # return the object to the caller
+        self.fig = fig

@@ -13,6 +13,8 @@ class NetAssetReport(Task):
 
     requires = Requires()
     other = Requirement(GetTradingHistory)
+    # Placeholder for plot
+    fig = object
 
     def output(self):
         # Remove old image, and replace it with a new one
@@ -54,3 +56,5 @@ class NetAssetReport(Task):
             os.makedirs(os.path.dirname(self.output().path))
         with open(self.output().path, 'wb') as out_file:
             plt.savefig(out_file)
+
+        self.fig = plt

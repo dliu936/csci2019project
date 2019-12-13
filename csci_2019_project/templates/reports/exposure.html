@@ -20,7 +20,7 @@
         <label for="cp1">Currency Pair</label>
         <select class="form-control form-control-sm">
           {% for key, value in currencylist.ccydict %}
-            <option value="{{ value }}">{{key}}</option>
+            <option value={{ value }}>{{key}}</option>
             {% endfor %}
         </select>
         <small id="cp1Help" class="form-text text-muted">Select the first of the currency pair</small>

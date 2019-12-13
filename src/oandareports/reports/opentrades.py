@@ -15,6 +15,8 @@ class OpenTradesReport(Task):
 
     # Set output location
     # output = TargetOutput(os.getenv('local_location') + '/image')
+    # Placeholder for plot
+    fig = []
 
     def order_flow(self, dsk):
         df = dsk.compute()
@@ -52,6 +54,8 @@ class OpenTradesReport(Task):
             fig.savefig(
                 os.getenv("local_location") + "images/" + "order_flow_{}.png".format(i)
             )
+            # Placeholder for plot
+            self.fig.append(fig)
 
     def run(self):
         dsk = dd.read_parquet(os.getenv("local_location") + "trading_history/*.parquet")

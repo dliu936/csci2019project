@@ -15,6 +15,10 @@ from django.shortcuts import render
 from django.core.management import BaseCommand, call_command
 #from src.oandareports.reports import exposure, correlation
 from src.oandareports.reports.exposure import ExposureReport
+from src.oandareports.reports.correlation import CorrelationReport
+from src.oandareports.reports.financing import FinancingReport
+from src.oandareports.reports.netasset import NetAssetReport
+from src.oandareports.reports.opentrades import OpenTradesReport
 
 class ReportDashView(TemplateView):
     template_name = 'reports/dash.html'
@@ -36,44 +40,10 @@ class ReportExposureView(TemplateView):
     Use this class to invoke luigi and be notified  when it completes successfully.
     '''
     template_name = 'reports/exposure.html'
-    fig = []
-
-    @ExposureReport.event_handler(luigi.Event.SUCCESS)
-    def celebrate_success(task):
-        ReportExposureView.fig.append(task)
 
     def index(request):
 
         ccydict = {"Unites States Dollar" : "USD", "United Kingdom Pounds" : "GBP"}
-        context = {'currencylist': ccydict}
-        return render(request, ReportDashView.template_name, context)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        t = ExposureReport()
-        task = build([t], local_scheduler=True)
-        if task:
-            plotly_fig = tls.mpl_to_plotly(t.fig)
-            div = opy.plot(plotly_fig, auto_open=False, output_type='div')
-            context['graph'] = div
-        return context
-
-class ReportExposureView2(TemplateView):
-    '''
-    Use this class to invoke the luigi task directly to get the saved report.
-    '''
-    template_name = 'reports/exposure.html'
-
-    def index(request):
-        t = ExposureReport()
-        task = build([t], local_scheduler=True)
-
-        if task:
-            # Read the output plot
-            # pass to template
-            pass
-
-        ccydict = {"Unites States Dollar": "USD", "United Kingdom Pounds": "GBP"}
         context = {'currencylist': ccydict}
         return render(request, ReportDashView.template_name, context)
 
@@ -101,7 +71,14 @@ class ReportFinancingView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        t = FinancingReport()
+        task = build([t], local_scheduler=True)
+        if task:
+            plotly_fig = tls.mpl_to_plotly(t.fig)
+            div = opy.plot(plotly_fig, auto_open=False, output_type='div')
+            context['graph'] = div
         return context
+
 
 
 class ReportNavView(TemplateView):
@@ -109,6 +86,12 @@ class ReportNavView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        t = NetAssetReport()
+        task = build([t], local_scheduler=True)
+        if task:
+            plotly_fig = tls.mpl_to_plotly(t.fig)
+            div = opy.plot(plotly_fig, auto_open=False, output_type='div')
+            context['graph'] = div
         return context
 
 
@@ -117,6 +100,12 @@ class ReportOpenTradeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # t = OpenTradesReport()
+        # task = build([t], local_scheduler=True)
+        # if task:
+        #     plotly_fig = tls.mpl_to_plotly(t.fig[0])
+        #     div = opy.plot(plotly_fig, auto_open=False, output_type='div')
+        #     context['graph'] = div
         return context
 
 
@@ -125,6 +114,14 @@ class ReportCorrelation(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # TODO: get the selection
+        #if request.POST.getlist('cp3')
+        t = CorrelationReport(granularity='M5')
+        task = build([t], local_scheduler=True)
+        if task:
+            plotly_fig = tls.mpl_to_plotly(t.fig)
+            div = opy.plot(plotly_fig, auto_open=False, output_type='div')
+            context['graph'] = div
         return context
 
 
