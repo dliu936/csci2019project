@@ -19,7 +19,7 @@ class FinancingReport(Task):
 
     df_list = []
     # Placeholder for plot
-    fig = object
+    fig = []
 
     def create_graph(self, df):
         for i in ['accountBalance','financing']:
@@ -32,10 +32,9 @@ class FinancingReport(Task):
             fig = sns_plot.get_figure()
             #TODO: Make directory if not existing
             fig.savefig(os.getenv('local_location') + 'images/' + '{}.png'.format(i))
-            fig.clf()
+            self.fig.append(fig)
+            #fig.clf()
 
-        # return the object to the caller
-        self.fig = fig
 
     def run(self):
         dsk = dd.read_parquet(os.getenv('local_location') + 'trading_history/*.parquet')

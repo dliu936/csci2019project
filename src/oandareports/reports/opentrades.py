@@ -55,7 +55,7 @@ class OpenTradesReport(Task):
                 os.getenv("local_location") + "images/" + "order_flow_{}.png".format(i)
             )
             # Placeholder for plot
-            self.fig.append(fig)
+            self.fig.append(plt)
 
     def run(self):
         dsk = dd.read_parquet(os.getenv("local_location") + "trading_history/*.parquet")

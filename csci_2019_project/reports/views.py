@@ -1,9 +1,11 @@
+import os
 import plotly.graph_objects as go
 import plotly.offline as opy
 import plotly.tools as tls
 import pandas as pd
 import luigi
 from luigi import build
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -42,10 +44,7 @@ class ReportExposureView(TemplateView):
     template_name = 'reports/exposure.html'
 
     def index(request):
-
-        ccydict = {"Unites States Dollar" : "USD", "United Kingdom Pounds" : "GBP"}
-        context = {'currencylist': ccydict}
-        return render(request, ReportDashView.template_name, context)
+        return render(request, ReportDashView.template_name)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -71,12 +70,12 @@ class ReportFinancingView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        t = FinancingReport()
-        task = build([t], local_scheduler=True)
-        if task:
-            plotly_fig = tls.mpl_to_plotly(t.fig)
-            div = opy.plot(plotly_fig, auto_open=False, output_type='div')
-            context['graph'] = div
+        # t = FinancingReport()
+        # task = build([t], local_scheduler=True)
+        # if task:
+        #     plotly_fig = tls.mpl_to_plotly(FigureCanvas(t.fig[0]))
+        #     div = opy.plot(plotly_fig, auto_open=False, output_type='div')
+        #     context['graph'] = div
         return context
 
 
@@ -86,12 +85,12 @@ class ReportNavView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        t = NetAssetReport()
-        task = build([t], local_scheduler=True)
-        if task:
-            plotly_fig = tls.mpl_to_plotly(t.fig)
-            div = opy.plot(plotly_fig, auto_open=False, output_type='div')
-            context['graph'] = div
+        # t = NetAssetReport()
+        # task = build([t], local_scheduler=True)
+        # if task:
+        #     plotly_fig = tls.mpl_to_plotly(t.fig)
+        #     div = opy.plot(plotly_fig, auto_open=False, output_type='div')
+        #     context['graph'] = div
         return context
 
 
@@ -103,7 +102,7 @@ class ReportOpenTradeView(TemplateView):
         # t = OpenTradesReport()
         # task = build([t], local_scheduler=True)
         # if task:
-        #     plotly_fig = tls.mpl_to_plotly(t.fig[0])
+        #     plotly_fig = tls.mpl_to_plotly(FigureCanvas(t.fig[0]))
         #     div = opy.plot(plotly_fig, auto_open=False, output_type='div')
         #     context['graph'] = div
         return context
@@ -114,14 +113,14 @@ class ReportCorrelation(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # TODO: get the selection
-        #if request.POST.getlist('cp3')
-        t = CorrelationReport(granularity='M5')
-        task = build([t], local_scheduler=True)
-        if task:
-            plotly_fig = tls.mpl_to_plotly(t.fig)
-            div = opy.plot(plotly_fig, auto_open=False, output_type='div')
-            context['graph'] = div
+        # # TODO: get the selection
+        # #if request.POST.getlist('cp3')
+        # t = CorrelationReport(granularity='M5')
+        # task = build([t], local_scheduler=True)
+        # if task:
+        #     plotly_fig = tls.mpl_to_plotly(t.fig)
+        #     div = opy.plot(plotly_fig, auto_open=False, output_type='div')
+        #     context['graph'] = div
         return context
 
 
@@ -131,7 +130,7 @@ class ReportTradeDistribution(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ReportTradeDistribution, self).get_context_data(**kwargs)
 
-        df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv')
+        df = pd.read_csv(os.path.join('data','stocks','finance-charts-apple.csv'))
 
         fig = go.Figure(data=[go.Candlestick(x=df['Date'],
                                              open=df['AAPL.Open'], high=df['AAPL.High'],
@@ -139,8 +138,8 @@ class ReportTradeDistribution(TemplateView):
                               ])
 
         fig.update_layout(
-            title='The Great Recession',
-            yaxis_title='AAPL Stock',
+            title='Trade Distribution',
+            yaxis_title='USD/EUR',
             shapes=[dict(
                 x0='2016-12-09', x1='2016-12-09', y0=0, y1=1, xref='x', yref='paper',
                 line_width=2)],
