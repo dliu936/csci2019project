@@ -7,6 +7,10 @@ import luigi
 from luigi import build
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 
+import oandareports as rp
+
+#from oandareports.reports.exposure import ExposureReport as E
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
@@ -15,15 +19,15 @@ from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 from django.shortcuts import render
 from django.core.management import BaseCommand, call_command
-#from src.oandareports.reports import exposure, correlation
+
 from src.oandareports.reports.exposure import ExposureReport
-# from src.oandareports.reports.correlation import CorrelationReport
-# from src.oandareports.reports.financing import FinancingReport
-# from src.oandareports.reports.netasset import NetAssetReport
-# from src.oandareports.reports.opentrades import OpenTradesReport
+from src.oandareports.reports.correlation import CorrelationReport
+from src.oandareports.reports.financing import FinancingReport
+from src.oandareports.reports.netasset import NetAssetReport
+from src.oandareports.reports.opentrades import OpenTradesReport
 from src.oandareports.reports.tradedistribution import TradeDistributionReport
 
-#from oandareports.reports.exposure import ExposureReport
+#from oandareports.reports.exposure import ExposureReport as exrpt
 # from oandareports.reports.correlation import CorrelationReport
 # from oandareports.reports.financing import FinancingReport
 # from oandareports.reports.netasset import NetAssetReport
@@ -94,12 +98,12 @@ class ReportNavView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # t = NetAssetReport()
-        # task = build([t], local_scheduler=True)
-        # if task:
-        #     plotly_fig = tls.mpl_to_plotly(t.fig)
-        #     div = opy.plot(plotly_fig, auto_open=False, output_type='div')
-        #     context['graph'] = div
+        t = NetAssetReport()
+        task = build([t], local_scheduler=True)
+        if task:
+            plotly_fig = tls.mpl_to_plotly(t.fig)
+            div = opy.plot(plotly_fig, auto_open=False, output_type='div')
+            context['graph'] = div
         return context
 
 
@@ -149,14 +153,38 @@ class ReportTradeDistribution(TemplateView):
         return context
 
 
-    def get_context_data2(self, **kwargs):
-        context = super(ReportTradeDistribution, self).get_context_data(**kwargs)
+class ReportPricingDistribution(TemplateView):
+    template_name = 'reports/pricingdist.html'
 
-        df = pd.read_csv(os.path.join('data','stocks','finance-charts-apple.csv'))
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+class ReportScenarioView(TemplateView):
+    template_name = 'reports/scenario.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+
+class ReportSpread(TemplateView):
+    template_name = 'reports/spread.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+class DemoCandleStick(TemplateView):
+
+    def get_context_data(self, **kwargs):
+        context = super(DemoCandleStick, self).get_context_data(**kwargs)
+
+        df = pd.read_csv(os.path.join('data','stocks','sample.csv'))
 
         fig = go.Figure(data=[go.Candlestick(x=df['Date'],
-                                             open=df['AAPL.Open'], high=df['AAPL.High'],
-                                             low=df['AAPL.Low'], close=df['AAPL.Close'])
+                                             open=df['USD_EUR.Open'], high=df['USD_EUR.High'],
+                                             low=df['USD_EUR.Low'], close=df['USD_EUR.Close'])
                               ])
 
         fig.update_layout(
@@ -171,12 +199,4 @@ class ReportTradeDistribution(TemplateView):
         )
         div = opy.plot(fig, auto_open=False, output_type='div')
         context['graph'] = div
-        return context
-
-
-class ReportPricingDistribution(TemplateView):
-    template_name = 'reports/pricingdist.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
         return context

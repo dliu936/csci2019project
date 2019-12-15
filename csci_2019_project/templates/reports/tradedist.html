@@ -3,7 +3,7 @@
 {% block report_title %}
     <div class="container">
       <h1 class="display-4">Trade Distribution Report</h1>
-      <p class="lead">Show current snd historic exposure for portfolio size and currency exposure.</p>
+      <p class="lead">Show current and historic exposure for portfolio size and currency exposure.</p>
     </div>
 {% endblock %}
   {% load static %}
@@ -11,7 +11,7 @@
   {% if graph %}
     <div style="width:600;height:500">{{ graph|safe }}</div>
   {% else %}
-    <div><img class="rpt_exposure" src="{% static "images/EUR_CAD_exposure.png" %}" alt="Trade Distribution Report" ></div>
+    <div><img class="rpt_exposure" src="{% static "images/tradedistribution.png" %}" alt="Trade Distribution Report" ></div>
   {% endif %}
 {% endblock report %}
 

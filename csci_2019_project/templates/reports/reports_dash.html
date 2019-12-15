@@ -62,7 +62,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{% url 'scenario' %}">
               <span data-feather="archive"></span>
               Scenario Simulations
             </a>
@@ -86,7 +86,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{% url 'spread' %}">
               <span data-feather="file-text"></span>
               Spread
             </a>
@@ -125,6 +125,9 @@
         </div>
       </div>
 
+      <div class="alert alert-info" role="alert">
+      Select a report to run
+      </div>
 
       <!--
         <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
