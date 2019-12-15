@@ -59,11 +59,12 @@ DJANGO_APPS = [
     "django.contrib.sessions",
     "django.contrib.sites",
     "django.contrib.messages",
+    "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
     # "django.contrib.humanize", # Handy template tags
     "django.contrib.admin",
     #'django_extensions',
-    "whitenoise.runserver_nostatic",
+
 ]
 THIRD_PARTY_APPS = [
     "crispy_forms",

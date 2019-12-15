@@ -4,6 +4,13 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+pytest = "*"
+pytest-cov = "*"
+factory-boy = "*"
+pytest-cookies = "*"
+pytest-django = "*"
+django-coverage-plugin = "*"
+django-debug-toolbar = "*"
 
 [packages]
 pandas = "*"
@@ -44,6 +51,7 @@ setuptools-scm = "*"
 python-dotenv = "*"
 tqdm = "*"
 fastparquet = "*"
+onandareports = {editable = true,git = "https://github.com/oeyvindds/oandareports.git"}
 
 [requires]
 python_version = "3.7"
