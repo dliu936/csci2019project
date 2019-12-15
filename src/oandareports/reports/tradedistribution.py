@@ -63,6 +63,9 @@ class TradeDistributionReport(Task):
 
 
     def run(self):
+        def absUnits(units):
+            return abs(units)
+
         def buyUnits(units):
             if (units > 0):
                 return units
@@ -89,6 +92,11 @@ class TradeDistributionReport(Task):
         dsk["day"] = dsk["time"].dt.day_name()
         # get only rows with ORDER_FILL
         dsk = dsk[(dsk['type'] == 'ORDER_FILL')]
+
+        #TEMP
+        dsk = dsk[(dsk['instrument'] == 'USD_THB') | (dsk['instrument'] == 'EUR_USD')]
+
+
         dsk['units'] = dsk['units'].astype('int')
         # Find the buy and sell rows
         # dsk = dsk.assign(buy_units=dsk['units'] if dsk['units'] >= 0 else 0,
@@ -97,6 +105,8 @@ class TradeDistributionReport(Task):
         dsk['sell_units'] = dsk.apply(lambda x: sellUnits(x['units']), axis=1)
         dsk['action'] = dsk.apply(lambda x: tradeType(x['units']), axis=1)
         #dsk['sell_units'] = abs(dsk['units']) if dsk['units'] < 0 else 0
+
+        dsk['units'] = dsk.apply(lambda x: absUnits(x['units']), axis=1)
         dsk.set_index('day')
 
         print(dsk.head(10))
@@ -129,8 +139,7 @@ class TradeDistributionReport(Task):
         print(df[0:10])
         fig = px.bar(df, x=0, y=3, color=6, barmode="group", facet_row=2, facet_col=0,
                      category_orders={0: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-                                      2: ["AUD_CHF",
-                                                     "AUD_SGD",
+                                      2: ["USD_THB","EUR_USD",
                                                      # "BCO_USD",
                                                      # "EUR_CAD",
                                                      # "EUR_USD",
