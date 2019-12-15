@@ -7,7 +7,7 @@ import luigi
 from luigi import build
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 
-import oandareports as rp
+from  oandareports.reports.exposure import  ExposureReport as E2
 
 #from oandareports.reports.exposure import ExposureReport as E
 

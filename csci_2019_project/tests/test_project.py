@@ -70,7 +70,7 @@ class TestWebSite(DJTest):
         self.assertEqual(response.status_code, 200)
 
 
-    def testBuild(self, rpt, **kwargs):
+    def testBuild(self, rpt, MultFigs=False, **kwargs):
         '''
         Reusable test for checking if the report builds successfully.
         Pass in any parameters in kwargs.
@@ -81,8 +81,12 @@ class TestWebSite(DJTest):
         self.assertTrue(task, msg=f"Could not build report {t.__class__}")
         if task:
             # Check if the graph is drawn
-            fig = t.fig
-            self.assertIsNotNone(fig, msg="Figure was not generated")
+            if MultFigs:
+                figs = t.figs
+                self.assertTrue(len(figs) > 0)
+            else:
+                fig = t.fig
+                self.assertIsNotNone(fig, msg="Figure was not generated")
 
 
     def test_correlation(self):
@@ -92,28 +96,65 @@ class TestWebSite(DJTest):
         c = Client()
         c.open('reports/correlation')
         # Build the report to get the output file
-        self.testBuild(CorrelationReport())
-        t = CorrelationReport()
-
-
-        view = ReportExposureView.as_view(actions={'get': 'retrieve'})
+        r=CorrelationReport()
+        self.testBuild(r)
+        view = ReportCorrelation.as_view(actions={'get': 'retrieve'})
 
 
     def test_exposure(self):
-
         '''
         Exposure report
         '''
         c = Client()
         c.open('reports/exposure')
         # Build the report to get the output file
-        t = ExposureReport()
-        # Check if the task succeeds
-        task = build([t], local_scheduler=True)
-        self.assertTrue(task, msg=f"Could not build report {t.__class__}")
-        if task:
-            fig = t.fig
-            self.assertIsNotNone(fig, msg="Figure was not generated")
-
+        r = ExposureReport()
+        self.testBuild(r)
         view = ReportExposureView.as_view(actions={'get': 'retrieve'})
 
+
+    def test_financing(self):
+        '''
+        Financing report
+        '''
+        c = Client()
+        c.open('reports/financing')
+        # Build the report to get the output file
+        r = FinancingReport()
+        self.testBuild(r, True)
+        view = ReportFinancingView.as_view(actions={'get': 'retrieve'})
+
+
+    def test_nav(self):
+        '''
+        Net Asset Value report
+        '''
+        c = Client()
+        c.open('reports/nav')
+        # Build the report to get the output file
+        r = NetAssetReport()
+        self.testBuild(r)
+        view = ReportNavView.as_view(actions={'get': 'retrieve'})
+
+    def test_opentrades(self):
+        '''
+        Open Trades report
+        '''
+        c = Client()
+        c.open('reports/opentrades')
+        # Build the report to get the output file
+        r = OpenTradesReport()
+        self.testBuild(r, True)
+        view = ReportOpenTradeView.as_view(actions={'get': 'retrieve'})
+
+
+    def test_tradedistrib(self):
+        '''
+        Trade Distribution report
+        '''
+        c = Client()
+        c.open('reports/tradedist')
+        # Build the report to get the output file
+        r = ReportTradeDistribution()
+        self.testBuild(r)
+        view = ReportTradeDistribution.as_view(actions={'get': 'retrieve'})

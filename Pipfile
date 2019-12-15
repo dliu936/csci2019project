@@ -50,7 +50,7 @@ setuptools-scm = "*"
 python-dotenv = "*"
 tqdm = "*"
 fastparquet = "*"
-oandareports = {editable = true,git = "https://github.com/oeyvindds/oandareports.git",ref = "master"}
+oandareports = {editable = true,git = "https://github.com/oeyvindds/oandareports.git"}
 
 [requires]
 python_version = "3.7"
