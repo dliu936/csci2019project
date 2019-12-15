@@ -17,10 +17,19 @@ from django.shortcuts import render
 from django.core.management import BaseCommand, call_command
 #from src.oandareports.reports import exposure, correlation
 from src.oandareports.reports.exposure import ExposureReport
-from src.oandareports.reports.correlation import CorrelationReport
-from src.oandareports.reports.financing import FinancingReport
-from src.oandareports.reports.netasset import NetAssetReport
-from src.oandareports.reports.opentrades import OpenTradesReport
+# from src.oandareports.reports.correlation import CorrelationReport
+# from src.oandareports.reports.financing import FinancingReport
+# from src.oandareports.reports.netasset import NetAssetReport
+# from src.oandareports.reports.opentrades import OpenTradesReport
+from src.oandareports.reports.tradedistribution import TradeDistributionReport
+
+#from oandareports.reports.exposure import ExposureReport
+# from oandareports.reports.correlation import CorrelationReport
+# from oandareports.reports.financing import FinancingReport
+# from oandareports.reports.netasset import NetAssetReport
+# from oandareports.reports.opentrades import OpenTradesReport
+
+
 
 class ReportDashView(TemplateView):
     template_name = 'reports/dash.html'
@@ -128,6 +137,19 @@ class ReportTradeDistribution(TemplateView):
     template_name = 'reports/tradedist.html'
 
     def get_context_data(self, **kwargs):
+        context = super(ReportTradeDistribution, self).get_context_data(**kwargs)
+        # TODO: get the selection
+        #if request.POST.getlist('cp3')
+        t = TradeDistributionReport()
+        task = build([t], local_scheduler=True)
+        if task:
+            plotly_fig = t.fig
+            div = opy.plot(plotly_fig, auto_open=False, output_type='div')
+            context['graph'] = div
+        return context
+
+
+    def get_context_data2(self, **kwargs):
         context = super(ReportTradeDistribution, self).get_context_data(**kwargs)
 
         df = pd.read_csv(os.path.join('data','stocks','finance-charts-apple.csv'))
