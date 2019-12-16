@@ -16,13 +16,13 @@ from django.shortcuts import render
 from django.core.management import BaseCommand, call_command
 
 # TODO: rename these once it is in the master branch
-from src.oandareports.reports.exposure import ExposureReport
-from src.oandareports.reports.correlation import CorrelationReport
-from src.oandareports.reports.financing import FinancingReport
-from src.oandareports.reports.netasset import NetAssetReport
-from src.oandareports.reports.opentrades import OpenTradesReport
-from src.oandareports.reports.volatility import VolatilityReport
-from src.oandareports.reports.tradedistribution import TradeDistributionReport
+from oandareports.reports.exposure import ExposureReport
+from oandareports.reports.correlation import CorrelationReport
+from oandareports.reports.financing import FinancingReport
+from oandareports.reports.netasset import NetAssetReport
+from oandareports.reports.opentrades import OpenTradesReport
+from oandareports.reports.volatility import VolatilityReport
+from oandareports.reports.tradedistribution import TradeDistributionReport
 
 
 class ReportDashView(TemplateView):

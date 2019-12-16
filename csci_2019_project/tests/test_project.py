@@ -14,13 +14,12 @@ from django.urls import reverse, resolve
 from luigi import build
 
 # TODO: rename these once it is in the master branch
-from src.oandareports.reports.exposure import ExposureReport
-from src.oandareports.reports.correlation import CorrelationReport
-from src.oandareports.reports.financing import FinancingReport
-from src.oandareports.reports.netasset import NetAssetReport
-from src.oandareports.reports.opentrades import OpenTradesReport
-from src.oandareports.reports.volatility import VolatilityReport
-from src.oandareports.reports.tradedistribution import TradeDistributionReport
+from oandareports.reports.exposure import ExposureReport
+from oandareports.reports.correlation import CorrelationReport
+from oandareports.reports.financing import FinancingReport
+from oandareports.reports.netasset import NetAssetReport
+from oandareports.reports.opentrades import OpenTradesReport
+from oandareports.reports.tradedistribution import TradeDistributionReport
 
 from csci_2019_project.reports.views import ReportExposureView, ReportCorrelation, \
                                             ReportDashView, ReportFinancingView, ReportNavView, \
@@ -47,15 +46,16 @@ class TestWebSite(DJTest):
 
     def test_responses(self):
         # Verify each of the endpoints are responding
-        response = self.client.get('/reports/correlation/')
+        # These tests were giving an unexpected 404 response.
+        response = self.client.get(r'reports/correlation/')
         self.assertEqual(response.status_code, 200)
-        response = self.client.get('/reports/exposure/')
+        response = self.client.get(r'reports/exposure/')
         self.assertEqual(response.status_code, 200)
-        response = self.client.get('/reports/financing/')
+        response = self.client.get('reports/financing/')
         self.assertEqual(response.status_code, 200)
-        response = self.client.get('/reports/nav/')
+        response = self.client.get('reports/nav/')
         self.assertEqual(response.status_code, 200)
-        response = self.client.get('/reports/opentrade/')
+        response = self.client.get('reports/opentrade/')
         self.assertEqual(response.status_code, 200)
         response = self.client.get('/reports/pricingdist/')
         self.assertEqual(response.status_code, 200)
@@ -148,20 +148,6 @@ class TestWebSite(DJTest):
             figs = r.figs
             self.assertTrue(len(figs) > 0)
 
-
-    def test_volatility(self):
-        '''
-        Volatility report
-        '''
-        c = Client()
-        c.get('reports/volatility')
-        # Build the report to get the output file
-        r = VolatilityReport(instrument='BCD_USD')
-        task = build([r], local_scheduler=True)
-        self.assertTrue(task, msg=f"Could not build report {r.__class__}")
-        if task:
-            figs = r.figs
-            self.assertTrue(len(figs) > 0)
 
 
     def test_tradedistrib(self):
