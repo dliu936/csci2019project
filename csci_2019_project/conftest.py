@@ -8,8 +8,7 @@ import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '')))
 
 
-from tests.factories import UserFactory
-
+from .users.tests.factories import UserFactory
 
 @pytest.fixture(autouse=True)
 def media_storage(settings, tmpdir):
