@@ -1,7 +1,7 @@
 import pytest
 
 from csci_2019_project.users.forms import UserCreationForm
-from tests.factories import UserFactory
+from csci_2019_project.users.tests.factories import UserFactory
 
 pytestmark = pytest.mark.django_db
 
