@@ -5,11 +5,6 @@ import plotly.tools as tls
 import pandas as pd
 import luigi
 from luigi import build
-from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-
-from  oandareports.reports.exposure import  ExposureReport as E2
-
-#from oandareports.reports.exposure import ExposureReport as E
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -20,19 +15,14 @@ from django.utils.translation import ugettext_lazy as _
 from django.shortcuts import render
 from django.core.management import BaseCommand, call_command
 
+# TODO: rename these once it is in the master branch
 from src.oandareports.reports.exposure import ExposureReport
 from src.oandareports.reports.correlation import CorrelationReport
 from src.oandareports.reports.financing import FinancingReport
 from src.oandareports.reports.netasset import NetAssetReport
 from src.oandareports.reports.opentrades import OpenTradesReport
+from src.oandareports.reports.volatility import VolatilityReport
 from src.oandareports.reports.tradedistribution import TradeDistributionReport
-
-#from oandareports.reports.exposure import ExposureReport as exrpt
-# from oandareports.reports.correlation import CorrelationReport
-# from oandareports.reports.financing import FinancingReport
-# from oandareports.reports.netasset import NetAssetReport
-# from oandareports.reports.opentrades import OpenTradesReport
-
 
 
 class ReportDashView(TemplateView):
@@ -75,6 +65,13 @@ class ReportVolatilityView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        t = VolatilityReport(instrument='EUR_USD')
+        task = build([t], local_scheduler=True)
+        if task:
+            if (t.figs is not None) and (len(t.figs) > 0):
+                plotly_fig = tls.mpl_to_plotly(t.figs[0])
+                div = opy.plot(plotly_fig, auto_open=False, output_type='div')
+                context['graph'] = div
         return context
 
 
@@ -83,12 +80,13 @@ class ReportFinancingView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # t = FinancingReport()
-        # task = build([t], local_scheduler=True)
-        # if task:
-        #     plotly_fig = tls.mpl_to_plotly(FigureCanvas(t.fig[0]))
-        #     div = opy.plot(plotly_fig, auto_open=False, output_type='div')
-        #     context['graph'] = div
+        t = FinancingReport()
+        task = build([t], local_scheduler=True)
+        if task:
+            if (t.figs is not None) and (len(t.figs) > 0):
+                plotly_fig = tls.mpl_to_plotly(t.figs[0])
+                div = opy.plot(plotly_fig, auto_open=False, output_type='div')
+                context['graph'] = div
         return context
 
 
@@ -112,12 +110,13 @@ class ReportOpenTradeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # t = OpenTradesReport()
-        # task = build([t], local_scheduler=True)
-        # if task:
-        #     plotly_fig = tls.mpl_to_plotly(FigureCanvas(t.fig[0]))
-        #     div = opy.plot(plotly_fig, auto_open=False, output_type='div')
-        #     context['graph'] = div
+        t = OpenTradesReport()
+        task = build([t], local_scheduler=True)
+        if task:
+            if (t.figs is not None) and (len(t.figs) > 0):
+                plotly_fig = tls.mpl_to_plotly(t.figs[0])
+                div = opy.plot(plotly_fig, auto_open=False, output_type='div')
+                context['graph'] = div
         return context
 
 
@@ -126,14 +125,12 @@ class ReportCorrelation(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # # TODO: get the selection
-        # #if request.POST.getlist('cp3')
-        # t = CorrelationReport(granularity='M5')
-        # task = build([t], local_scheduler=True)
-        # if task:
-        #     plotly_fig = tls.mpl_to_plotly(t.fig)
-        #     div = opy.plot(plotly_fig, auto_open=False, output_type='div')
-        #     context['graph'] = div
+        t = CorrelationReport(granularity='M5')
+        task = build([t], local_scheduler=True)
+        if task:
+            plotly_fig = tls.mpl_to_plotly(t.fig)
+            div = opy.plot(plotly_fig, auto_open=False, output_type='div')
+            context['graph'] = div
         return context
 
 

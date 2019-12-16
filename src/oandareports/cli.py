@@ -78,7 +78,7 @@ elif args.function[0] == 'stream':
         #exit()
     #import streaming
     #instrument = args.instrument[0]
-    import examples.streaming
+    from  examples import streaming
     streaming.Streaming(instruments=instrument)
 
 elif args.function[0] == 'volatility':

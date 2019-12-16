@@ -10,8 +10,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from helperfiles.task import TargetOutput, Requires, Requirement
-from helperfiles.target import ParquetTarget
+from ..helperfiles.task import TargetOutput, Requires, Requirement
+from ..helperfiles.target import ParquetTarget
 
 """
 Functionality for downloading historic rates for the instruments provided by the brokerage
