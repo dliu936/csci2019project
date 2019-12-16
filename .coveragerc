@@ -1,5 +1,5 @@
-[run]
-include = csci_2019_project/*
-omit = *migrations*, *tests*
-plugins =
-    django_coverage_plugin
+[report]
+omit =
+    */tests.py
+    */test_*.py
+    */*_tests.py

@@ -13,7 +13,9 @@ urlpatterns = [
     path("financing", ReportFinancingView.as_view(), name="financing"),
     path("netassetvalue", ReportNavView.as_view(), name="nav"),
     path("opentrades", ReportOpenTradeView.as_view(), name="opentrades"),
+    path("scenario", ReportScenarioView.as_view(), name="scenario"),
     path("correlation", ReportCorrelation.as_view(), name="correlation"),
     path("tradedist", ReportTradeDistribution.as_view(), name="tradedist"),
     path("pricingdist", ReportPricingDistribution.as_view(), name="pricingdist"),
+    path("spread", ReportSpread.as_view(), name="spread"),
 ]

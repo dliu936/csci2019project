@@ -30,10 +30,9 @@ psycopg2 = "==2.8.3"
 django-storages = {extras = ["boto3"],version = "==1.8"}
 django-anymail = {extras = ["mailgun"],version = "==7.0.0"}
 Pillow = "==6.2.1"
-Django = "==2.2.7"
+django = "==2.2.7"
 Collectfast = "==1.3.1"
 django-extensions = "*"
-django-debug-toolbar = "*"
 django-toolbelt = "*"
 dj-database-url = "*"
 whitenoise = "*"
@@ -51,7 +50,7 @@ setuptools-scm = "*"
 python-dotenv = "*"
 tqdm = "*"
 fastparquet = "*"
-onandareports = {editable = true,git = "https://github.com/oeyvindds/oandareports.git"}
+oandareports = {editable = true,git = "https://github.com/oeyvindds/oandareports.git"}
 
 [requires]
 python_version = "3.7"
