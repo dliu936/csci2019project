@@ -105,6 +105,23 @@ Storage is 's3' if you want automatic backup to AWS S3 (Remember to update the .
 
 And one last thing; the - report function creates a pdf-report of all the graphs in the images-folder. However, you need to use some of the other functions to generate contents. Otherways you will end up with an empty pdf.
 
+
+DEPLOYMENT
+----------
+
+We chose to use Heroku as our web hosting provider. It has fantastic integration and support for Python and particularly Django projects using WSGI.
+
+The process was simple as the cookie cutter template from **gh:pydanny/cookiecutter-django** provided support for such deployments.
+
+Following the guided instructions from heroku, the app was created and pushed to heroku and even had continous integration to github for any commits.
+
+However, significant issues were encountered when the app is executed on the server. It reports that gunincorn is not found, which is very odd given that
+it is identified in the pipfile.  A large amount of time was spent to rectify this issue to no avail.  In hindsight, the way forward would
+have been to use Docker containers.  Heroku provides native support for Docker containers, but the project was not set up appropriately.
+
+This topic will be revisited once the docker files are set up and pushed to our github repository.
+
+
 NOTES
 -----
 
