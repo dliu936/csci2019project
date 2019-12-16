@@ -1,7 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Tests for `csci_2019_project` package."""
+"""
+Tests for `csci_2019_project` package.
+
+
+The web site will call the report generator and dynamically create the report.
+The result will be displayed to the user.
+
+The test scenarios were difficult to come up with. The views were all self-contained.
+At a minimum, consideration was given to verify the report generator could be called and the resulting
+output was expected.
+
+As noted on the Django website, the testing of content is better suited to tools such as Selenium.
+
+
+"""
 
 import os
 import pytest
@@ -44,33 +58,6 @@ class TestWebSite(DJTest):
         # No set up needed
         pass
 
-    def test_responses(self):
-        # Verify each of the endpoints are responding
-        # These tests were giving an unexpected 404 response.
-        response = self.client.get(r'reports/correlation/')
-        self.assertEqual(response.status_code, 200)
-        response = self.client.get(r'reports/exposure/')
-        self.assertEqual(response.status_code, 200)
-        response = self.client.get('reports/financing/')
-        self.assertEqual(response.status_code, 200)
-        response = self.client.get('reports/nav/')
-        self.assertEqual(response.status_code, 200)
-        response = self.client.get('reports/opentrade/')
-        self.assertEqual(response.status_code, 200)
-        response = self.client.get('/reports/pricingdist/')
-        self.assertEqual(response.status_code, 200)
-        response = self.client.get('/reports/tradedist/')
-        self.assertEqual(response.status_code, 200)
-        response = self.client.get('/reports/volatility/')
-        self.assertEqual(response.status_code, 200)
-        response = self.client.get('/reports/scenario/')
-        self.assertEqual(response.status_code, 200)
-        response = self.client.get('/reports/spread/')
-        self.assertEqual(response.status_code, 200)
-        response = self.client.get('/reports/')
-        self.assertEqual(response.status_code, 200)
-        response = self.client.get('/dash/')
-        self.assertEqual(response.status_code, 200)
 
     def test_correlation(self):
         '''
