@@ -3,7 +3,7 @@ from django.conf import settings
 from django.test import RequestFactory
 
 
-from .users.tests.factories import UserFactory
+from csci_2019_project.users.tests.factories import UserFactory
 
 @pytest.fixture(autouse=True)
 def media_storage(settings, tmpdir):
