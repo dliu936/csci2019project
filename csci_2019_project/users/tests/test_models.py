@@ -3,6 +3,8 @@ from django.conf import settings
 from typing import Any, Sequence
 from django.contrib.auth import get_user_model
 from factory import DjangoModelFactory, Faker, post_generation
+from django.conf import settings
+from django.test import RequestFactory
 
 pytestmark = pytest.mark.django_db
 
