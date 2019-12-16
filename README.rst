@@ -7,14 +7,33 @@ OandaReports.  Open source tool for reporting Oanda trading
 :Version: 0.13.0
 
 .. index: README
+
+Reports
+^^^^^^^
 .. image:: https://travis-ci.com/oeyvindds/oandareports.svg?branch=master
    :target: https://travis-ci.com/oeyvindds/oandareports
 
 .. image:: https://api.codeclimate.com/v1/badges/14f80df17e87c4c3510e/maintainability
-    :target: https://codeclimate.com/github/oeyvindds/oandareports/maintainability
+   :target: https://codeclimate.com/github/oeyvindds/oandareports/maintainability
 
 .. image:: https://api.codeclimate.com/v1/badges/14f80df17e87c4c3510e/test_coverage
-    :target: https://codeclimate.com/github/oeyvindds/oandareports/test_coverage
+   :target: https://codeclimate.com/github/oeyvindds/oandareports/test_coverage
+
+
+Web site
+^^^^^^^^
+
+.. image:: https://travis-ci.com/dliu936/csci_2019_project.svg?token=8949r3UdNok3iW6pn3pE&branch=master
+    :target: https://travis-ci.com/dliu936/csci_2019_project
+
+.. image:: https://api.codeclimate.com/v1/badges/3dc17d4edf6262d754ad/maintainability
+   :target: https://codeclimate.com/github/dliu936/csci2019project/maintainability
+   :alt: Maintainability
+
+.. image:: https://api.codeclimate.com/v1/badges/3dc17d4edf6262d754ad/test_coverage
+   :target: https://codeclimate.com/github/dliu936/csci2019project/test_coverage
+   :alt: Test Coverage
+
 
 PURPOSE
 -------
