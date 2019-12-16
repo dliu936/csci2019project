@@ -2,12 +2,7 @@ import pytest
 from django.conf import settings
 from django.test import RequestFactory
 
-
 from csci_2019_project.users.tests.factories import UserFactory
-
-import os
-import sys
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 @pytest.fixture(autouse=True)
 def media_storage(settings, tmpdir):
