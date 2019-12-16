@@ -1,11 +1,51 @@
 import pytest
 from django.conf import settings
 from django.test import RequestFactory
-
+from typing import Any, Sequence
 from csci_2019_project.users.views import UserRedirectView, UserUpdateView
+
+from django.contrib.auth import get_user_model
+from factory import DjangoModelFactory, Faker, post_generation
 
 pytestmark = pytest.mark.django_db
 
+
+class UserFactory(DjangoModelFactory):
+
+    username = Faker("user_name")
+    email = Faker("email")
+    name = Faker("name")
+
+    @post_generation
+    def password(self, create: bool, extracted: Sequence[Any], **kwargs):
+        password = Faker(
+            "password",
+            length=42,
+            special_chars=True,
+            digits=True,
+            upper_case=True,
+            lower_case=True,
+        ).generate(extra_kwargs={})
+        self.set_password(password)
+
+    class Meta:
+        model = get_user_model()
+        django_get_or_create = ["username"]
+
+
+@pytest.fixture(autouse=True)
+def media_storage(settings, tmpdir):
+    settings.MEDIA_ROOT = tmpdir.strpath
+
+
+@pytest.fixture
+def user() -> settings.AUTH_USER_MODEL:
+    return UserFactory()
+
+
+@pytest.fixture
+def request_factory() -> RequestFactory:
+    return RequestFactory()
 
 class TestUserUpdateView:
     """
