@@ -108,10 +108,26 @@ Storage is 's3' if you want automatic backup to AWS S3 (Remember to update the .
 And one last thing; the - report function creates a pdf-report of all the graphs in the images-folder. However, you need to use some of the other functions to generate contents. Otherways you will end up with an empty pdf.
 
 
+Djamgo Web site
+---------------
+
+After completing the steps above, clone the django repo here: https://github.com/dliu936/csci_2019_project.git
+
+Change into the local directory where you have downloaded this
+
+Run the command to install all the dependencies: pipenv install
+Run the command to initialize the database with the necessary support tables: python manage.py makemigrations
+Run the command to create the data in the database tables: python manage.py migrate
+Finally you can start the web server locally by running:  python manage.py runserver
+Click on the link or go to 127.0.0.1:8000 in your browser.
+
+Follow the Reports link to access the reports.
+
+
 DEPLOYMENT
 ----------
 
-We chose to use Heroku as our web hosting provider. It has fantastic integration and support for Python and particularly Django projects using WSGI.
+As a stretch goal, we chose to use Heroku as our web hosting provider. This was not part of the original proposal, but would make an ideal setup for instructors to view the website with ease. It has fantastic integration and support for Python and particularly Django projects using WSGI. So, while we knew we may not deploy to heroku in time for project submission, it seemed a worthwhile goal. Ultimately, we did not meet this goal. However, we learned much in the process and intend to use it in the near future. 
 
 The process was simple as the cookie cutter template from **gh:pydanny/cookiecutter-django** provided support for such deployments.
 
