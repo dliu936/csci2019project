@@ -15,7 +15,7 @@ coreschema==0.0.4
 cycler==0.10.0
 dask[complete]==2.9.0
 defusedxml==0.6.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
-distributed==2.9.0
+distributed==2021.10.0
 dj-database-url==0.5.0
 dj-static==0.0.6
 django-allauth==0.40.0
